@@ -42,6 +42,5 @@ pub async fn delete(id: Path<String>) -> Result<Json<()>, Error> {
 #[get("/blog")]
 pub async fn list() -> Result<Json<Vec<BlogPost>>, Error> {
     let posts = DB.select(BLOG_POST).await?;
-    println!("Hello");
     Ok(Json(posts))
 }
