@@ -7,8 +7,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4"
-
-serde = { version = "1.0.158", features = ["derive"] }
-
-surrealdb = { git = "https://github.com/surrealdb/surrealdb.git", branch="main" }
 thiserror = "1.0.40"
+serde = { version = "1.0.158", features = ["derive"] }
+surrealdb = { git = "https://github.com/surrealdb/surrealdb.git", branch="main" }
+env_logger = "0.10.0"

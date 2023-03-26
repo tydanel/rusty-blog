@@ -3,17 +3,20 @@ mod error;
 
 use actix_web;
 use actix_web::{App, HttpServer};
+use actix_web::middleware::{Logger};
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::Root;
 use surrealdb::Surreal;
 
-
+use env_logger::Env;
 
 
 static DB: Surreal<Client> = Surreal::init();
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> Result<(), Box< dyn std::error::Error>> {
+    env_logger::init_from_env(Env::default().default_filter_or("info"));
+    
     DB.connect::<Ws>("localhost:8000").await?;
 
     DB.signin(Root {
@@ -26,8 +29,10 @@ async fn main() -> Result<(), Box< dyn std::error::Error>> {
     
     println!("Database connected");
 
+
     HttpServer::new(|| {
         App::new()
+            .wrap(Logger::default())
             .service(blog_post::create)
             .service(blog_post::read)
             .service(blog_post::update)
