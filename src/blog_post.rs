@@ -33,7 +33,7 @@ pub async fn update(id: Path<String>, post: Json<BlogPost>) -> Result<Json<BlogP
     Ok(Json(post))
 }
 
-#[delete("/blog/id")]
+#[delete("/blog/{id}")]
 pub async fn delete(id: Path<String>) -> Result<Json<()>, Error> {
     DB.delete((BLOG_POST, &*id)).await?;
     Ok(Json(()))
